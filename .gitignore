@@ -416,3 +416,39 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# node modules
+node_modules/
+
+# next.js build output
+.next/
+out/
+
+# production
+dist/
+build/
+
+# tailwind
+.tailwind/
+
+# environment variables
+.env
+.env.local
+.env.*.local
+
+# typescript
+*.tsbuildinfo
+
+# logs
+logs
+*.log
+
+# turbo
+.turbo/
+
+# macOS & system files
+.DS_Store
+
+# IDE/editor config
+.vscode/
+.idea/
