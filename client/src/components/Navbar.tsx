@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import Searchbar from "./Searchbar";
+import { Bell, HomeIcon, ShoppingCart } from "lucide-react";
 
 const Navbar = () => {
   return (
@@ -12,9 +14,25 @@ const Navbar = () => {
           height={50}
           className="w-6 h-6 md:w-9 md:h-9 "
         />
-        <p className="text-md font-medium tracking-wider">Bazario</p>
+        <p className="hidden md:block text-md font-medium tracking-wider">
+          Bazario
+        </p>
       </Link>
-      <div className="">right</div>
+
+      <div className="flex items-center gap-4">
+        {" "}
+        <Searchbar />
+        <Link href="/" className="">
+          <HomeIcon className="w-4 h-4 text-gray-500" />
+        </Link>
+        <Bell className="w-4 h-4 text-gray-500" />
+        <ShoppingCart className="w-4 h-4 text-gray-500" />
+        <Link href="/login">
+          <button className="bg-blue-300 text-white px-4 py-2 rounded-md cursor-pointer hover:bg-blue-400 transition">
+            Log In
+          </button>
+        </Link>
+      </div>
     </nav>
   );
 };
