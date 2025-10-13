@@ -1,6 +1,7 @@
 import { ProductsType } from "@/types";
 import Categories from "./Categories";
 import ProductCart from "./ProductCart";
+import Link from "next/link";
 
 const products: ProductsType = [
   {
@@ -113,7 +114,7 @@ const products: ProductsType = [
   },
 ];
 
-const ProductList = () => {
+const ProductList = ({ category }: { category: string }) => {
   return (
     <div className="w-full">
       <Categories />
@@ -122,6 +123,12 @@ const ProductList = () => {
           <ProductCart key={product.id} product={product} />
         ))}
       </div>
+      <Link
+        href={category ? `/products/?category=${category}` : "/products"}
+        className="flex justify-end text-sm text-gray-500"
+      >
+        View all products
+      </Link>
     </div>
   );
 };
