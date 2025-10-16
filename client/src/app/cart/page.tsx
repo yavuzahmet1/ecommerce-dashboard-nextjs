@@ -1,9 +1,13 @@
 "use client";
 
+import PaymentForm from "@/components/PaymentForm";
+import ShippingForm from "@/components/ShippingForm";
 import { CartItemsType } from "@/types";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Trash } from "lucide-react";
+import Image from "next/image";
 
 import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 const steps = [
   { id: 1, title: "Shopping Cart" },
@@ -52,6 +56,7 @@ const cartItems: CartItemsType = [
 const CartPage = () => {
   const searhParams = useSearchParams();
   const router = useRouter();
+  const [shippingForm, setShippingForm] = useState(null);
   const activeStep = parseInt(searhParams.get("step") || "1");
   return (
     <div className="flex flex-col gap-6 items-center justify-center mt-12">
@@ -83,8 +88,49 @@ const CartPage = () => {
         ))}
       </div>
       <div className="w-full flex flex-col lg:flex-row gap-1">
-        <div className="w-full lg:w-1/2 shadow-lg border-1 border-gray-100 p-8 rounded-lg flex flex-col gap-8"></div>
-        <div className="w-full lg:w-1/3 shadow-lg border-1 border-gray-100 p-8 rounded-lg flex flex-col gap-8">
+        <div className="w-full lg:w-1/2 shadow-lg border-1 border-gray-100 p-8 rounded-lg flex flex-col gap-8">
+          {activeStep === 1 ? (
+            cartItems.map((item) => (
+              <div className="flex items-center justify-between" key={item.id}>
+                <div className="flex gap-8">
+                  <div className="relative w-32 h-32 rounded-xl overflow-hidden bg-gray-50">
+                    <Image
+                      src={item.images[item.selectedColor]}
+                      alt={item.name}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <div className="flex flex-col justify-between">
+                    <div className="flex flex-col gap-2">
+                      <p className="text-sm font-medium">{item.name}</p>
+                      <p className="text-xs text-gray-500">
+                        Quantity : {item.quantity}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        Size : {item.selectedSize.toUpperCase()}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        Color : {item.selectedColor}
+                      </p>
+                    </div>
+                    <p className="font-medium">${item.price.toFixed(2)}</p>
+                  </div>
+                </div>
+                <button>
+                  <Trash className="w-4 h-4 text-red-600 hover:text-red-800 transition cursor-pointer " />
+                </button>
+              </div>
+            ))
+          ) : activeStep === 2 ? (
+            <ShippingForm />
+          ) : activeStep === 3 && shippingForm ? (
+            <PaymentForm />
+          ) : (
+            <p className="text-sm">Please fill in the shipping Form</p>
+          )}
+        </div>
+        <div className="w-full lg:w-1/3 shadow-lg border-1 border-gray-100 p-8 rounded-lg flex flex-col gap-8 h-max">
           <h2 className="font-semibold">Cart Details</h2>
           <div className="flex flex-col gap-4">
             <div className="flex justify-between">
@@ -107,13 +153,12 @@ const CartPage = () => {
             <hr className="border-gray-200" />
             <div className="flex justify-between">
               <p className="text-gray-800 font-semibold">Total</p>
+
               <p className="font-semibold">
-                <p className="font-semibold">
-                  $
-                  {cartItems
-                    .reduce((acc, item) => acc + item.price * item.quantity, 0)
-                    .toFixed(2)}
-                </p>
+                $
+                {cartItems
+                  .reduce((acc, item) => acc + item.price * item.quantity, 0)
+                  .toFixed(2)}
               </p>
             </div>
           </div>
