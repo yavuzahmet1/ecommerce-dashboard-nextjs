@@ -4,7 +4,7 @@ A modern, performant, and scalable frontend client for e-commerce dashboard appl
 
 ## 🎥 Demo
 
-![demo](/demo/demo.gif)
+![demo](/demo/demo_.gif)
 
 ## 🚀 Features
 
