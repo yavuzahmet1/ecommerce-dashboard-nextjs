@@ -2,7 +2,8 @@
 
 import PaymentForm from "@/components/PaymentForm";
 import ShippingForm from "@/components/ShippingForm";
-import { CartItemsType } from "@/types";
+import useCartStore from "@/stores/cartStore";
+import { CartItemsType, ShippingFormInputs } from "@/types";
 import { ArrowRight, Trash } from "lucide-react";
 import Image from "next/image";
 
@@ -16,48 +17,51 @@ const steps = [
   { id: 4, title: "Review Order" },
 ];
 
-const cartItems: CartItemsType = [
-  {
-    id: 1,
-    name: "Adidas CoreFit T-Shirt",
-    shortDescription:
-      "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-    description:
-      "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-    price: 39.9,
-    sizes: ["s", "m", "l", "xl", "xxl"],
-    colors: ["gray", "purple", "green"],
-    images: {
-      gray: "/products/1g.png",
-      purple: "/products/1p.png",
-      green: "/products/1gr.png",
-    },
-    quantity: 2,
-    selectedSize: "m",
-    selectedColor: "gray",
-  },
-  {
-    id: 2,
-    name: "Puma Ultra Warm Zip",
-    shortDescription:
-      "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-    description:
-      "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
-    price: 59.9,
-    sizes: ["s", "m", "l", "xl"],
-    colors: ["gray", "green"],
-    images: { gray: "/products/2g.png", green: "/products/2gr.png" },
-    quantity: 1,
-    selectedSize: "l",
-    selectedColor: "green",
-  },
-];
+// const cartItems: CartItemsType = [
+//   {
+//     id: 1,
+//     name: "Adidas CoreFit T-Shirt",
+//     shortDescription:
+//       "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
+//     description:
+//       "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
+//     price: 39.9,
+//     sizes: ["s", "m", "l", "xl", "xxl"],
+//     colors: ["gray", "purple", "green"],
+//     images: {
+//       gray: "/products/1g.png",
+//       purple: "/products/1p.png",
+//       green: "/products/1gr.png",
+//     },
+//     quantity: 2,
+//     selectedSize: "m",
+//     selectedColor: "gray",
+//   },
+//   {
+//     id: 2,
+//     name: "Puma Ultra Warm Zip",
+//     shortDescription:
+//       "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
+//     description:
+//       "Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit. Lorem ipsum dolor sit amet consect adipisicing elit lorem ipsum dolor sit.",
+//     price: 59.9,
+//     sizes: ["s", "m", "l", "xl"],
+//     colors: ["gray", "green"],
+//     images: { gray: "/products/2g.png", green: "/products/2gr.png" },
+//     quantity: 1,
+//     selectedSize: "l",
+//     selectedColor: "green",
+//   },
+// ];
 
 const CartPage = () => {
   const searhParams = useSearchParams();
   const router = useRouter();
-  const [shippingForm, setShippingForm] = useState(null);
+  const [shippingForm, setShippingForm] = useState<ShippingFormInputs>();
   const activeStep = parseInt(searhParams.get("step") || "1");
+
+  const { cart, removeFromCart } = useCartStore();
+
   return (
     <div className="flex flex-col gap-6 items-center justify-center mt-12">
       <h1>Your Shopping Cart</h1>
@@ -90,8 +94,11 @@ const CartPage = () => {
       <div className="w-full flex flex-col lg:flex-row gap-1">
         <div className="w-full lg:w-1/2 shadow-lg border-1 border-gray-100 p-8 rounded-lg flex flex-col gap-8">
           {activeStep === 1 ? (
-            cartItems.map((item) => (
-              <div className="flex items-center justify-between" key={item.id}>
+            cart.map((item) => (
+              <div
+                className="flex items-center justify-between"
+                key={item.id + item.selectedSize + item.selectedColor}
+              >
                 <div className="flex gap-8">
                   <div className="relative w-32 h-32 rounded-xl overflow-hidden bg-gray-50">
                     <Image
@@ -117,7 +124,7 @@ const CartPage = () => {
                     <p className="font-medium">${item.price.toFixed(2)}</p>
                   </div>
                 </div>
-                <button>
+                <button onClick={() => removeFromCart(item)}>
                   <Trash className="w-4 h-4 text-red-600 hover:text-red-800 transition cursor-pointer " />
                 </button>
               </div>
@@ -137,7 +144,7 @@ const CartPage = () => {
               <p className="text-gray-600">Subtotal</p>
               <p className="font-semibold">
                 $
-                {cartItems
+                {cart
                   .reduce((acc, item) => acc + item.price * item.quantity, 0)
                   .toFixed(2)}
               </p>
@@ -156,7 +163,7 @@ const CartPage = () => {
 
               <p className="font-semibold">
                 $
-                {cartItems
+                {cart
                   .reduce((acc, item) => acc + item.price * item.quantity, 0)
                   .toFixed(2)}
               </p>
