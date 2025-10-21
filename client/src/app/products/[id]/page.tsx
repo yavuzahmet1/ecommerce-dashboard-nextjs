@@ -31,8 +31,7 @@ const ProductPage = async ({
 
   return (
     <div className="flex flex-col gap-4 lg:flex-row md:gap-12 mt-12">
-      ProductPage
-      <div className="w-full lg:w-5/12 relative aspect-[2/3">
+      <div className="w-full lg:w-5/12 relative aspect-[2/3]">
         <Image
           src={product.images[selectedColor]}
           alt={product.name}
@@ -40,7 +39,38 @@ const ProductPage = async ({
           className="object-contain rounded-md"
         />
       </div>
-      <div></div>
+      <div className="flex flex-col gap-4 w-full lg:w-7/12">
+        <h1 className="text-3xl font-semibold">{product.name}</h1>
+        <p className="text-lg text-gray-600">{product.shortDescription}</p>
+        <p className="text-xl font-medium">${product.price.toFixed(2)}</p>
+        <div className="flex items-center gap-4">
+          <Image
+            src="/klarna.png"
+            alt="Klarna"
+            width={50}
+            height={25}
+            className="object-contain"
+          />
+          <Image
+            src="/cards.png"
+            alt="Credit Cards"
+            width={50}
+            height={25}
+            className="object-contain"
+          />
+          <Image
+            src="/stripe.png"
+            alt="Stripe"
+            width={50}
+            height={25}
+            className="object-contain"
+          />
+        </div>
+        <p className="text-gray-500 text-xs">
+          By clicking the button above, you agree to our Terms and Conditions
+          and Privacy Policy.
+        </p>
+      </div>
     </div>
   );
 };
