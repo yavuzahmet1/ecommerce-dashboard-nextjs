@@ -19,6 +19,35 @@ const product: ProductType = {
   },
 };
 
+export const generateMetadata = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) => {
+  const { id } = await params;
+  return {
+    title: `${product.name} | EcomGitHub`,
+    description: product.shortDescription,
+    openGraph: {
+      title: `${product.name} | EcomGitHub`,
+      description: product.shortDescription,
+      images: [
+        {
+          url: product.images.gray,
+          width: 800,
+          height: 600,
+          alt: product.name,
+        },
+      ],
+    },
+    twitter: {
+      title: `${product.name} | EcomGitHub`,
+      description: product.shortDescription,
+      images: [product.images.gray],
+    },
+  };
+};
+
 const ProductPage = async ({
   params,
   searchParams,
