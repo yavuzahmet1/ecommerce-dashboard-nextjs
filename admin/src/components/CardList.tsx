@@ -117,30 +117,42 @@ const latestTransactions = [
   {
     id: 1,
     title: "Order Payment",
-    image: "/products/1g.png",
-    badge: "Completed",
-    count: 1250,
+    badge: "John Doe",
+    image:
+      "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=800",
+    count: 1400,
   },
   {
     id: 2,
     title: "Order Payment",
-    image: "/products/2g.png",
-    badge: "Pending",
-    count: 980,
+    badge: "Jane Smith",
+    image:
+      "https://images.pexels.com/photos/4969918/pexels-photo-4969918.jpeg?auto=compress&cs=tinysrgb&w=800",
+    count: 2100,
   },
   {
     id: 3,
     title: "Order Payment",
-    image: "/products/3gr.png",
-    badge: "Completed",
-    count: 860,
+    badge: "Michael Johnson",
+    image:
+      "https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=800",
+    count: 1300,
   },
   {
     id: 4,
     title: "Order Payment",
-    image: "/products/4w.png",
-    badge: "Completed",
-    count: 740,
+    badge: "Lily Adams",
+    image:
+      "https://images.pexels.com/photos/712513/pexels-photo-712513.jpeg?auto=compress&cs=tinysrgb&w=800",
+    count: 2500,
+  },
+  {
+    id: 5,
+    title: "Order Payment",
+    badge: "Sam Brown",
+    image:
+      "https://images.pexels.com/photos/1680175/pexels-photo-1680175.jpeg?auto=compress&cs=tinysrgb&w=800",
+    count: 1400,
   },
 ];
 
