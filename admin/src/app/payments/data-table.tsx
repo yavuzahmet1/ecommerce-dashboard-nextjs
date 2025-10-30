@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/table";
 import { DataTablePagination } from "@/components/TablePagination";
 import { useState } from "react";
+import { Trash2 } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -40,16 +41,30 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     onSortingChange: setSorting,
-    onRowSelectionChange:setRowSelection,
+    onRowSelectionChange: setRowSelection,
     state: {
       sorting,
-      rowSelection
+      rowSelection,
     },
   });
 
-  console.log(table);
+  console.log(rowSelection);
   return (
     <div className="rounded-md border">
+      {Object.keys(rowSelection).length > 0 && (
+        <div className="p-2 flex justify-end items-center">
+          <button
+            className="flex items-center gap-2 bg-red-500 text-white px-2 py-1 text-sm rounded-md m-4 cursor-poiner"
+            onClick={() => {
+              const selectedIds = Object.keys(rowSelection);
+              console.log("Selected payment IDs:", selectedIds);
+            }}
+          >
+            <Trash2 className="w-4 h-4" />
+            delete payment(s)
+          </button>
+        </div>
+      )}
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -92,24 +107,7 @@ export function DataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
-      {/* <div className="flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          Previous
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          Next
-        </Button>
-      </div> */}
+
       <DataTablePagination table={table} />
     </div>
   );
