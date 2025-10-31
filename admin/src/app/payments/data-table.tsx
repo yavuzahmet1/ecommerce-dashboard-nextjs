@@ -52,16 +52,10 @@ export function DataTable<TData, TValue>({
   return (
     <div className="rounded-md border">
       {Object.keys(rowSelection).length > 0 && (
-        <div className="p-2 flex justify-end items-center">
-          <button
-            className="flex items-center gap-2 bg-red-500 text-white px-2 py-1 text-sm rounded-md m-4 cursor-poiner"
-            onClick={() => {
-              const selectedIds = Object.keys(rowSelection);
-              console.log("Selected payment IDs:", selectedIds);
-            }}
-          >
-            <Trash2 className="w-4 h-4" />
-            delete payment(s)
+        <div className="flex justify-end">
+          <button className="flex items-center gap-2 bg-red-500 text-white px-2 py-1 text-sm rounded-md m-4 cursor-pointer">
+            <Trash2 className="w-4 h-4"/>
+            Delete Payment(s)
           </button>
         </div>
       )}
@@ -107,7 +101,6 @@ export function DataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
-
       <DataTablePagination table={table} />
     </div>
   );
